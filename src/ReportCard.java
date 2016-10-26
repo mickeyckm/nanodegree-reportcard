@@ -8,15 +8,38 @@ import java.util.Set;
 
 public class ReportCard {
 
-    private String studentName;
-    private ArrayList<String> subjects;
-    private Hashtable<String, String> grades;
+    private String mStudentName;
+    private ArrayList<String> mSubjects;
+    private Hashtable<String, String> mGrades;
 
-    public ReportCard(String name) {
-        studentName = name;
-
+    public ReportCard(String studentName) {
+        mStudentName = studentName;
         initSubjects();
         initGrades();
+    }
+
+    public String getStudentName() {
+        return mStudentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.mStudentName = studentName;
+    }
+
+    public ArrayList<String> getSubjects() {
+        return mSubjects;
+    }
+
+    public void setSubjects(ArrayList<String> subjects) {
+        this.mSubjects = subjects;
+    }
+
+    public Hashtable<String, String> getGrades() {
+        return mGrades;
+    }
+
+    public void setGrades(Hashtable<String, String> grades) {
+        this.mGrades = grades;
     }
 
     public String getGrade(String subject) throws Exception {
@@ -28,7 +51,7 @@ public class ReportCard {
         // Sanitize inputs
         subject = subject.toLowerCase().trim();
 
-        return String.valueOf(grades.get(subject));
+        return String.valueOf(mGrades.get(subject));
     }
 
     public void setGrade(String subject, String grade) throws Exception {
@@ -49,18 +72,19 @@ public class ReportCard {
             throw new Exception("Invalid grade!");
         }
         else {
-            grades.put(subject, grade);
+            mGrades.put(subject, grade);
         }
     }
 
+    @Override
     public String toString() {
         String report = "";
 
-        report += "Student Name: " + studentName + "\n";
-        Set<String> keys = grades.keySet();
+        report += "Student Name: " + mStudentName + "\n";
+        Set<String> keys = mGrades.keySet();
         for (String key: keys) {
             report += "Grade for " + capitalize(key) + ": ";
-            String grade = (String) grades.get(key);
+            String grade = (String) mGrades.get(key);
             if (!grade.isEmpty()) {
                 report += grade.toUpperCase();
             }
@@ -73,7 +97,7 @@ public class ReportCard {
     }
 
     private Boolean isValidSubject(String subject) {
-        return subjects.contains(subject);
+        return mSubjects.contains(subject);
     }
 
     private Boolean isValidGrade(String grade) {
@@ -85,19 +109,19 @@ public class ReportCard {
     }
 
     private void initSubjects() {
-        subjects = new ArrayList<>();
-        subjects.add("english");
-        subjects.add("maths");
-        subjects.add("physics");
-        subjects.add("chemistry");
-        subjects.add("biology");
-        subjects.add("history");
+        mSubjects = new ArrayList<>();
+        mSubjects.add("english");
+        mSubjects.add("maths");
+        mSubjects.add("physics");
+        mSubjects.add("chemistry");
+        mSubjects.add("biology");
+        mSubjects.add("history");
     }
 
     private void initGrades() {
-        grades = new Hashtable<String, String>();
-        for (String subject: subjects) {
-            grades.put(subject, "");
+        mGrades = new Hashtable<String, String>();
+        for (String subject: mSubjects) {
+            mGrades.put(subject, "");
         }
     }
 
